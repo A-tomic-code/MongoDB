@@ -1,0 +1,86 @@
+*{
+    transition: all 1s !important;
+}
+.main{
+    width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(244, 244, 244, 0.627) !important;
+    
+
+}
+header{
+    
+    box-shadow: 0px -5px 15px rgb(98, 93, 93);
+    border-bottom: 2px solid orange;
+}
+.page{
+    height: 90vh;
+}
+
+.card {
+    min-height: 220px !important;
+    background-color: rgba(244, 244, 244, 0.627) !important ;
+    /* color: orange !important; */
+    box-shadow: 0px 0px 2px white ;
+}.card:hover {
+    box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px);
+}
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: black !important;
+    
+}
+.card-body a{
+    width: 60%;
+    align-self: flex-end;
+}
+.card-header{
+    background: rgba(98, 93, 93, 0.15) !important;
+    border-bottom: solid 1px orange !important;
+}
+
+.alumno__botones button{
+   width: 100%;
+   margin-bottom: 5px;
+   
+}
+
+form{
+    height: 90vh;
+}
+
+.text-field{
+    background: transparent;
+    border:none;
+    border-bottom: 1px solid green;
+    /* border-bottom: 1px solid green; */
+    width: 100%;
+    padding: 1%;
+    padding-left: 3%;
+    outline: none;
+    color:orange
+    
+}
+::placeholder{
+    color:green;
+}
+
+a{
+    text-decoration: none !important;
+    font-weight: 400 !important;
+    color: orange !important;
+}
+a:hover{
+    color: lightgray !important
+}
+.navbar{
+    /* background: rgb(36, 52, 64); */
+    background: rgb(34, 58, 66);
+}
+
+.btn-success{
+    color:white !important
+}
