@@ -11,9 +11,10 @@ mongoose.connect(url,
     }
 );
 
-function check(err, ress){
-    err ? console.log(err) : console.log(res) ;
+function check(err, ress) {
+    err ? console.log(err) : console.log(res);
 }
+//! -------------------------------------------------------------------------------------------------------
 
 // MarkSchema.aggregate(
 //     [
@@ -32,6 +33,8 @@ function check(err, ress){
 // .then( (result) => {
 //     detalles('NOTA > 8 || FECHA > 1 ANYO', result)
 // })
+
+//! -------------------------------------------------------------------------------------------------------
 
 // MarkSchema.aggregate(
 //     [   
@@ -57,32 +60,71 @@ function check(err, ress){
 // .then( (result) => {
 //     detalles('MEDIA ULT ANYO / ASIGNATURA', result)
 // })
-MarkSchema.aggregate(
-    [   
-        {
-            $match :
-                {
-                    date : {'$gt' : new Date('2022,08,01')}
-                }
 
+//! -------------------------------------------------------------------------------------------------------
+
+// MarkSchema.aggregate(
+//     [   
+//         {
+//             $match :
+//                 {
+//                     date : {'$gt' : new Date('2022,08,01')}
+//                 }
+
+//         },
+//         {
+//             $group : 
+//                 {
+//                     '_id' : 
+//                         {
+//                             'alumno' : '$student_first_name',
+//                             'media' : {'$avg' : '$mark'},
+//                         }
+//                 }
+//         }
+
+//     ]
+// )
+// .then( (result) => {
+//     detalles('MEDIA ULT ANYO / ALUMNO', result)
+// })
+
+//! -------------------------------------------------------------------------------------------------------
+
+MarkSchema.aggregate(
+    [
+        {
+            $unwind : '$teachers'
+        },
+        {
+
+            $match:
+            {
+                "teachers.teacher_first_name": 'Menchu'
+            }
         },
         {
             $group : 
-                {
-                    '_id' : [ 
-                                {'media' : {'$avg' : '$mark'}},
-                                 '$student_first_name' 
-                            ]
+                {  
+                    '_id' : 
+                        {
+                            'Alumno' : '$student_first_name',
+                            'Asignatura': '$subject_name',
+                            'Profesor' : '$teachers.teacher_first_name'
+                        }
+         
                 }
         }
+        
 
     ]
 )
 .then( (result) => {
-   console.log('media >> ' + result._id + ' Alumno >> ')
+    detalles('ASIGNATURAS POR ALUMNO && PROFESOR == MENCHU', result)
 })
 
-function detalles(msg, result){
+
+function detalles(msg, result) {
     console.log(msg);
     console.log(result);
     console.log('\n');
