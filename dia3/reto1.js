@@ -10,7 +10,7 @@ mongoose.connect(url,
     }
 );
 
-function check(err, ress){
+function check(err, res){
     err ? console.log(err) : console.log(res) ;
 }
 
@@ -216,7 +216,7 @@ let mark1 =
 
     marks.push(mark10);
 
-    // MarkSchema.insertMany(marks, check)
+    // MarkSchema.insertMany(marks, check) //! ----> NO DESCOMENTAR NUNCA <-----
 
 
     MarkSchema.aggregate(
@@ -242,7 +242,7 @@ let mark1 =
         ]
     )
     .then( (result) => {
-        // detalles('NOTA MEDIA DE MAQUTACION', result)
+        detalles('NOTA MEDIA DE MAQUTACION', result)
     })
 
     MarkSchema.aggregate(
@@ -257,7 +257,7 @@ let mark1 =
         ]
     )
     .then( (result) => {
-        // detalles('TOTAL DE ALUMNOS', result)
+        detalles('TOTAL DE ALUMNOS', result)
     })
 
 
@@ -274,7 +274,7 @@ let mark1 =
         ]
     )
     .then( (result) => {
-        // detalles('ALUMNOS CON NOMBRE Y APELLIDO', result)
+        detalles('ALUMNOS CON NOMBRE Y APELLIDO', result)
 
     })
     
@@ -294,7 +294,7 @@ let mark1 =
         ]
     )
     .then( (result) => {
-        // detalles('PROFESORES CON NOMBRE Y APELLIDO', result)
+        detalles('PROFESORES CON NOMBRE Y APELLIDO', result)
     })
 
     MarkSchema.aggregate(
@@ -318,7 +318,7 @@ let mark1 =
         ]
     )
     .then( (result) => {
-        // detalles('ALUMNOS POR GRUPO != ALFABETO', result)
+        detalles('ALUMNOS POR GRUPO != ALFABETO', result)
     })
 
     MarkSchema.aggregate(
@@ -353,7 +353,7 @@ let mark1 =
         ]
     )
     .then( (result) => {
-        // detalles('TOP 5 ASIGNATURAS CON MEDIA > 5', result)
+        detalles('TOP 5 ASIGNATURAS CON MEDIA > 5', result)
     })
 
     MarkSchema.aggregate(
