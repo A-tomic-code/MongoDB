@@ -5,20 +5,20 @@ const profileSchema = new mongoose.Schema({
     surname: String,
     dateOfBirth: String,
     comments: String,
-    rol: {
-            type: String,
-            enum: ['admin', 'user', 'teacher']
-        }
-});
+    rol: String
+})
 
 profileSchema.pre('save', (next) => {
 
-    if (this.rol != 'admin' && this.rol != 'user' && this.rol != 'teacher'){
+    if (this.rol != 'admin' &&
+        this.rol != 'user' && 
+        this.rol != 'teacher')
+    {
 
         console.log('problema con el enum (no se pasa la validacion de datos)');
     }
     
-    next()
+   next()
 })
 
 module.exports = mongoose.model('profile', profileSchema, 'profile');
