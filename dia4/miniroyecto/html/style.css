@@ -1,10 +1,11 @@
 *{
     transition: all 1s !important;
+    box-sizing: border-box !important;
 }
 .main{
     width: 100vw;
     min-height: 100vh;
-    background-color: rgba(244, 244, 244, 0.627) !important;
+    background-color: rgba(178, 187, 189, 0.627) !important;
     
 
 }
@@ -13,18 +14,30 @@ header{
     box-shadow: 0px -5px 15px rgb(98, 93, 93);
     border-bottom: 2px solid orange;
 }
+
+.navbar{
+    /* background: rgb(36, 52, 64); */
+    background: rgb(34, 58, 66);
+}
 .page{
     height: 90vh;
 }
+.row{
+    box-sizing: border-box !important;
+}
 
 .card {
+    box-sizing: border-box !important;
     min-height: 220px !important;
     background-color: rgba(244, 244, 244, 0.627) !important ;
     /* color: orange !important; */
     box-shadow: 0px 0px 2px white ;
+    transition: border-width 100ms !important;
+    z-index: 1;
 }.card:hover {
-    box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.3);
-    transform: translateY(-5px);
+    box-shadow: 0px 0px 3px green;
+    backdrop-filter: hu;
+    
 }
 .card-body{
     display: flex;
@@ -38,13 +51,15 @@ header{
     align-self: flex-end;
 }
 .card-header{
-    background: rgba(98, 93, 93, 0.15) !important;
+    /* background: rgba(98, 93, 93, 0.15) !important; */
+    background: rgba(245, 209, 135, 0.386) !important;
     border-bottom: solid 1px orange !important;
+
 }
 
 .alumno__botones button{
-   width: 100%;
-   margin-bottom: 5px;
+   width: 100% !important;
+   margin-bottom: 5px !important;
    
 }
 
@@ -61,7 +76,8 @@ form{
     padding: 1%;
     padding-left: 3%;
     outline: none;
-    color:orange
+    color:orange;
+
     
 }
 ::placeholder{
@@ -76,11 +92,21 @@ a{
 a:hover{
     color: lightgray !important
 }
-.navbar{
-    /* background: rgb(36, 52, 64); */
-    background: rgb(34, 58, 66);
-}
+
 
 .btn-success{
     color:white !important
 }
+ .btn-success:hover{
+    width: 100%;
+    color:white !important
+
+ } .btn-success:hover::after{
+    content: '>>';
+    position: relative;
+    right: -10px;
+    /* color:blue !important; */
+    font-size: 100%;
+
+
+ }
