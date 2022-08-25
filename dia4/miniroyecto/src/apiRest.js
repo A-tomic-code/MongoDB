@@ -1,4 +1,5 @@
 const app = require('./app');
+require('./database')
 
 let PORT = app.get('port');
 

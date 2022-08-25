@@ -1,10 +1,14 @@
-const mysql = require('mysql2')
+const mongoose = require('mongoose')
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '.Kikoloko0',
-    database: 'school'
-});
+const url = 'mongodb+srv://korbyvk:alohomora@cluster0.twdkbdw.mongodb.net/IMDB'
 
-module.exports = connection;
+const database = mongoose.connect(url,
+    {
+        useNewUrlParser: false,
+        useUnifiedTopology: false
+    })
+    .then( (db) => {
+        console.log('db on >> ' + db.connection.host);
+    })
+
+module.exports = database;
