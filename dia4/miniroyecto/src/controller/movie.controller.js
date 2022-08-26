@@ -58,7 +58,7 @@ function postMovie(req, res) {
     .create({
       title: title,
       year: year,
-      genre: genre,
+      genre: genre, //
       producer, producer,
       language: language,
       actor_names: actor_names, //! [String]
