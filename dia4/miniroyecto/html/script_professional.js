@@ -1,45 +1,30 @@
 const table = document.querySelector('table');
+const input_id = document.getElementById('id')
 
-const inputs = document.querySelectorAll('input[type=text]')
-
-const student_id_input = inputs[0]
-const subject_id_input = inputs[1]
-const date_input = inputs[2]
-const mark_input = inputs[3]
-
-const id_input = inputs[4] //!
-
-const base_url = "http://localhost:5555/notas"
-
-
-
-table.style.height = document.querySelector('form').style.height;
-
-
+const base_url = "http://localhost:5555/professionals"
 
 function parseFormData() {
-    let student_id = student_id_input.value ? student_id_input.value : -1;
-    let subject_id = subject_id_input.value ? subject_id_input.value : -1;
-    
-    let date;
-    if(date_input.value){
-        date = date_input.value
-    }else{
-        let _date = new Date();
 
-        date = `${_date.getFullYear()}-${_date.getMonth() + 1}-${_date.getDay()}`
-    }
+    let first_name = document.getElementById('first_name').value;
+    let last_name = document.getElementById('last_name').value;
+    let age = document.getElementById('age').value;
+    let profesion = document.getElementById('profesion').value;
 
-    let mark = mark_input.value ? mark_input.value : -1
+    let professional = new Professional(first_name, last_name, age, profesion);
 
-    return new Mark(student_id, subject_id, date, mark)
+    console.info('Professional object parsed from form');
+    console.info(professional);
+
+    return professional
 }
 
 function consultar() {
     let url = base_url;
+;
+    let id = input_id.value
 
-    if (id_input.value) {
-        url += `?id=${id_input.value}`
+    if (id) {
+        url += `?id=${id}`
     }
 
     const params = {
@@ -50,10 +35,10 @@ function consultar() {
     let HTML_tabla = `
         <tr>
             <th>ID</th>
-            <th>Alumno</th>
-            <th>Asignatura</th>
-            <th>Fecha</th>
-            <th>Nota</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Edad</th>
+            <th>Profesion</th>
         </tr>`
 
     fetch(url, params)
@@ -62,20 +47,36 @@ function consultar() {
         })
         .then((data) => {
 
-            console.log(data.data)
-            data.data.forEach((nota => {
+            
+            if(!id){
+                data.data.forEach((professional => {
+                    console.log(professional)
+
+                    HTML_tabla +=
+                        `
+                    <tr>
+                        <td>${professional._id}</td>
+                        <td>${professional.first_name}</td>
+                        <td>${professional.last_name}</td>
+                        <td>${professional.age}</td>
+                        <td>${professional.profesion}</td>
+
+                    </tr>
+                `
+                }));
+            }else{
 
                 HTML_tabla +=
                     `
                     <tr>
-                        <td>${nota.id_}</td>
-                        <td>${nota.first_name + ' ' + nota.last_name}</td>
-                        <td>${nota.title}</td>
-                        <td>${nota.date}</td>
-                        <td>${nota.mark}</td>
-                    </tr>
-                `
-            }));
+                        <td>${data.data._id}</td>
+                        <td>${data.data.first_name}</td>
+                        <td>${data.data.last_name}</td>
+                        <td>${data.data.age}</td>
+                        <td>${data.data.profesion}</td>
+                    `
+                  
+            }
 
             table.innerHTML = HTML_tabla;
         });
@@ -83,13 +84,13 @@ function consultar() {
 }
 
 function modificar() {
-    let id = id_input.value;
+    let id = input_id.value;
 
-    let alumno = parseFormData();
+    let professional = parseFormData();
 
     if (id) {
 
-        let req_body = JSON.parse(JSON.stringify(alumno));
+        let req_body = JSON.parse(JSON.stringify(professional));
         req_body.id = id;
 
         console.log(req_body);
@@ -120,13 +121,15 @@ function modificar() {
 }
 
 function crear() {
-    let student = parseFormData();
+    let professional = parseFormData();
 
     const params = {
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(student),
+        body: JSON.stringify(professional),
         method: 'POST'
     }
+
+    console.log(params.body)
 
     fetch(base_url, params)
         .then((data) => {
@@ -143,7 +146,7 @@ function crear() {
 }
 
 function borrar() {
-    let ID = id_input.value;
+    let ID = input_id.value;
 
     if (ID) {
         const params = {

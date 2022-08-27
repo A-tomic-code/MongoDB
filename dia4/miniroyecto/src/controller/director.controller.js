@@ -70,14 +70,14 @@ function getDirector(req, res){
 function postDirector (req, res) {
     let id = req.body.id;
      
-    let first_name = req.body.first_name;
+    let director_name = req.body.name;
 
     professionalSchema.findByIdAndUpdate(
         {_id: id},
 
         {
             '$push' : {
-                        'director_names' : { '$each' : [first_name] }
+                        'director_names' : { '$each' : [director_name] }
                     }
         }
 
@@ -97,4 +97,32 @@ function postDirector (req, res) {
 
 }
 
-module.exports = {getDirector, postDirector}
+function deleteDirector(req, res) {
+    let response;
+
+    let id = req.body.id;
+    let director_name = req.body.name;
+
+    professionalSchema.findByIdAndUpdate(
+        { _id: id },
+
+        {
+            '$pull': { 'director_names': director_name }
+        }
+    )
+
+        .then((result) => {
+            console.log(result);
+
+            response = {
+                error: false,
+                code: 200,
+                message: "DELETE DIRECTOR OK !",
+                data: result,
+            };
+
+            res.send(response)
+        });
+}
+
+module.exports = {getDirector, postDirector, deleteDirector}

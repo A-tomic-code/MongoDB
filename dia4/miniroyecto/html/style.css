@@ -5,32 +5,54 @@
 .main{
     width: 100vw;
     min-height: 100vh;
-    background-color: rgba(178, 187, 189, 0.627) !important;
-    
+    background: rgba(178, 187, 189, 0.627);
+    z-index: -1 !important;
 
 }
 header{
-    
     box-shadow: 0px -5px 15px rgb(98, 93, 93);
     border-bottom: 2px solid orange;
+}
+label{
+    color: green
 }
 
 .navbar{
     /* background: rgb(36, 52, 64); */
     background: rgb(34, 58, 66);
 }
-.page{
+.bg-image{
+    position: absolute;
+    right: 0px;
+
+    width: 100vw;
     height: 90vh;
+
+    z-index: 0;
+
+    background: url(bg.png) no-repeat 110% center !important;
+    background-size: contain !important;
+}
+.page{
+    min-height: 80vh;
+    padding-left: 5%;
+    padding-right: 5%;
+
 }
 .row{
     box-sizing: border-box !important;
 }
 
 .card {
+    border-radius: 10px 50px 7px 70px !important;
+
+    overflow: hidden;
+
     box-sizing: border-box !important;
-    min-height: 220px !important;
+    min-height: 250px !important;
+
     background-color: rgba(244, 244, 244, 0.627) !important ;
-    /* color: orange !important; */
+    
     box-shadow: 0px 0px 2px white ;
     transition: border-width 100ms !important;
     z-index: 1;
@@ -52,22 +74,23 @@ header{
 }
 .card-header{
     /* background: rgba(98, 93, 93, 0.15) !important; */
-    background: rgba(245, 209, 135, 0.386) !important;
-    border-bottom: solid 1px orange !important;
+    color:white !important;
+    background-color: rgb(34, 58, 66)!important;
+    border-bottom: solid 3px orange  !important;
 
 }
 
 .alumno__botones button{
    width: 100% !important;
    margin-bottom: 5px !important;
-   
+
 }
 
-form{
-    height: 90vh;
+.select-content{
+    appearance: none;
 }
 
-.text-field{
+.text-field, .select-field{
     background: transparent;
     border:none;
     border-bottom: 1px solid green;
@@ -76,13 +99,12 @@ form{
     padding: 1%;
     padding-left: 3%;
     outline: none;
-    color:orange;
-
-    
+    color: green;
 }
 ::placeholder{
     color:green;
 }
+
 
 a{
     text-decoration: none !important;
@@ -97,16 +119,32 @@ a:hover{
 .btn-success{
     color:white !important
 }
- .btn-success:hover{
-    width: 100%;
+ .card-button:hover{
+    width: 85%;
     color:white !important
 
- } .btn-success:hover::after{
-    content: '>>';
-    position: relative;
-    right: -10px;
-    /* color:blue !important; */
-    font-size: 100%;
-
-
  }
+.text-gray{
+    color:rgb(123, 123, 123) !important;
+    font-size: 80%;
+}
+.table-wrapper{
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+
+    z-index: 1 !important;
+}
+
+th{
+    color: white !important;
+    background-color: #198754 !important;
+}
+
+th, td{
+    padding: 10px !important
+}
+
+td{
+    background-color: #ffffff57 !important;
+}

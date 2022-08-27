@@ -2,11 +2,14 @@ const express = require('express');
 const cors = require('cors');
 
 const errorHandling = require('./error/errorHandling')
+
 const testsRouter = require('./router/tests.router')
 const movieRouter = require('./router/movie.router')
 const actorRouter = require('./router/actor.router')
 const directorRouter = require('./router/director.router')
 const writerRouter = require('./router/writer.router')
+const producerRouter = require('./router/producer.router')
+const professionalRouter = require('./router/professional.router')
 
 const app = express();
 
@@ -21,6 +24,8 @@ app.use(movieRouter);
 app.use(actorRouter);
 app.use(directorRouter);
 app.use(writerRouter);
+app.use(producerRouter);
+app.use(professionalRouter);
 
 
 app.use( (req, res, next) => {

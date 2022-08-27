@@ -4,11 +4,10 @@ const movieSchema = require("../models/movie.schema");
 function getMovie(req, res) {
   let response;
 
-  let id = req.query.id;
+  let id = req.query.idPelicula;
 
   if (id) {
-    movieSchema
-      .findById(id)
+    movieSchema.findById(id)
 
       .then((result) => {
         console.log(result);
@@ -22,9 +21,9 @@ function getMovie(req, res) {
 
         res.send(response);
       });
+
   } else {
-    movieSchema
-      .find()
+    movieSchema.find()
 
       .then((result) => {
         console.log(result);
@@ -58,7 +57,7 @@ function postMovie(req, res) {
     .create({
       title: title,
       year: year,
-      genre: genre, //
+      genre: genre,
       producer, producer,
       language: language,
       actor_names: actor_names, //! [String]
@@ -86,6 +85,7 @@ function putMovie(req, res) {
   let title = req.body.title;
   let year = req.body.year;
   let genre = req.body.genre;
+  let producer = req.body.producer;
   let language = req.body.language;
   let actor_names = req.body.actor_names;
   let writer_names = req.body.writer_names;
@@ -102,6 +102,7 @@ function putMovie(req, res) {
         title: title,
         year: year,
         genre: genre,
+        producer, producer,
         language: language,
         actor_names: actor_names, //! [String]
         writer_names: writer_names, //! [String]

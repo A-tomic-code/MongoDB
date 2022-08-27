@@ -66,14 +66,14 @@ function getWriter(req, res){
 function postWriter (req, res) {
     let id = req.body.id;
      
-    let first_name = req.body.first_name;
+    let writer_name = req.body.name;
 
     professionalSchema.findByIdAndUpdate(
         {_id: id},
 
         {
             '$push' : {
-                        'writer_names' : { '$each' : [first_name] }
+                        'writer_names' : { '$each' : [writer_name] }
                     }
         }
 
@@ -91,6 +91,34 @@ function postWriter (req, res) {
 
           res.send(response)
     });
+}
+
+function deleteWriter(req, res) {
+    let response;
+
+    let id = req.body.id;
+    let writer_name = req.body.name;
+
+    professionalSchema.findByIdAndUpdate(
+        { _id: id },
+
+        {
+            '$pull': { 'writer_names': writer_name }
+        }
+    )
+
+        .then((result) => {
+            console.log(result);
+
+            response = {
+                error: false,
+                code: 200,
+                message: "DELETE DIRECTOR OK !",
+                data: result,
+            };
+
+            res.send(response)
+        });
 }
 
 module.exports = {getWriter, postWriter}

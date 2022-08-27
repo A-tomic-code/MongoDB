@@ -1,96 +1,127 @@
 const mongoose = require("mongoose");
+const movieSchema = require("../models/movie.schema");
 const professionalSchema = require("../models/movie.schema");
 
-function getActor(req, res){
+function getActor(req, res) {
     let idPelicula = req.query.idPelicula;
 
-    if(idPelicula){
+    if (idPelicula) {
         professionalSchema.aggregate(
             [
                 {
-                    $match : 
-                        {
-                             '_id' : new mongoose.Types.ObjectId(idPelicula),
-                        }
+                    $match:
+                    {
+                        '_id': new mongoose.Types.ObjectId(idPelicula),
+                    }
                 },
                 {
-                    $project : 
-                        {
-                            '_id' : 0,
-                            'actores' : '$actor_names'
-                        }
+                    $project:
+                    {
+                        '_id': 0,
+                        'actores': '$actor_names'
+                    }
                 }
             ]
         )
-        .then ( (result) => {
-            console.log(result)
+            .then((result) => {
+                console.log(result)
 
-            response = {
-                error: false,
-                code: 200,
-                message: "Collection OK !!",
-                data: result,
-              };
+                response = {
+                    error: false,
+                    code: 200,
+                    message: "Collection OK !!",
+                    data: result,
+                };
 
-            res.send(response)
-        })
+                res.send(response)
+            })
 
-    }else{
+    } else {
 
         professionalSchema.aggregate(
             [
                 {
-                    $project : 
-                        {
-                            '_id' : 0,
-                            'actores' : '$actor_names'
-                        }
+                    $project:
+                    {
+                        '_id': 0,
+                        'actores': '$actor_names'
+                    }
                 }
             ]
         )
-        .then ( (result) => {
-            console.log(result)
+            .then((result) => {
+                console.log(result)
 
-            response = {
-                error: false,
-                code: 200,
-                message: "Collection OK !",
-                data: result,
-              };
+                response = {
+                    error: false,
+                    code: 200,
+                    message: "Collection OK !",
+                    data: result,
+                };
 
-            res.send(response)
-        })
+                res.send(response)
+            })
     }
 }
 
-function postActor (req, res) {
+function postActor(req, res) {
     let id = req.body.id;
-     
-    let first_name = req.body.first_name;
+
+    let actor_name = req.body.name;
 
     professionalSchema.findByIdAndUpdate(
-        {_id: id},
+        { _id: id },
 
         {
-            '$push' : {
-                        'actor_names' : { '$each' : [first_name] }
-                    }
+            '$push':
+            {
+                'actor_names': { '$each': [actor_name] }
+            }
         }
 
     )
 
-    .then ( (result) => {
+        .then((result) => {
+            console.log(result);
+
+            response = {
+                error: false,
+                code: 200,
+                message: "Insertion OK !",
+                data: result,
+            };
+
+            res.send(response)
+        });
+}
+
+function deleteActor(req, res) {
+    let response;
+
+    let id = req.body.id;
+    let actor_name = req.body.name;
+
+    professionalSchema.findByIdAndUpdate(
+        { _id: id },
+
+        {
+            '$pull': { 'actor_names': actor_name }
+        }
+    )
+
+    .then((result) => {
         console.log(result);
 
         response = {
             error: false,
             code: 200,
-            message: "Insertion OK !",
+            message: "DELETE ACTOR OK !",
             data: result,
-          };
+        };
 
-          res.send(response)
+        res.send(response)
     });
 }
 
-module.exports = {getActor, postActor}
+
+module.exports = { getActor, postActor, deleteActor }

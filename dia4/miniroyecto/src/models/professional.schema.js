@@ -5,7 +5,7 @@ const professionalSchema = mongoose.Schema(
         first_name: String,
         last_name: String,
         age: Number,
-        type: String
+        profesion: String
     }
 )
 

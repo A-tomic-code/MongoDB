@@ -1,28 +1,54 @@
 const table = document.querySelector('table');
+const input_id = document.getElementById('id')
 
-const inputs = document.querySelectorAll('input[type=text]')
-
-const student_first_name_input = inputs[0]
-const student_last_name_input = inputs[1]
-const student_group_id_input = inputs[2]
-const student_id_input = inputs[3]
-
-const base_url = "http://localhost:5555/alumnos"
+const base_url = "http://localhost:5555/movies"
 
 function parseFormData() {
 
-    let first_name = student_first_name_input.value ? student_first_name_input.value : 'NoName';
-    let last_name = student_last_name_input.value ? student_last_name_input.value : 'NoLastName';
-    let group_id = student_group_id_input ? student_group_id_input.value : 'NoGroup';
+    let title = document.getElementById('title').value;
+    let anyo = document.getElementById('anyo').value;
+    let producer = document.getElementById('producer').value;
+    let language = document.getElementById('language').value;
+    let genre = document.getElementById('genre').value;
+    let actors = document.getElementById('actors').value;
+    let directors = document.getElementById('directors').value;
+    let writers = document.getElementById('writers').value;
 
-    return new Student(first_name, last_name, group_id);
+    let arr_actors = []
+    let arr_directors = []
+    let arr_writers = []
+    
+    actors.split(',').forEach((actor) => {
+        actor = actor.trim();
+        arr_actors.push(actor);
+    });
+
+    directors.split(',').forEach((director) => {
+        director = director.trim();
+        arr_directors.push(director);
+
+    });
+
+    writers.split(',').forEach((writer) => {
+        writer = writer.trim();
+        arr_writers.push(writer);
+    });
+
+
+    let movie = new Movie(title, anyo, producer, language, genre, arr_actors, arr_directors, arr_writers);
+
+    console.info('Movie object parsed from form');
+    console.info(movie);
+
+    return movie
 }
 
 function consultar() {
     let url = base_url;
+    let id = input_id.value;
 
-    if (student_id_input.value) {
-        url += `?id=${student_id_input.value}`
+    if (id) {
+        url += `?idPelicula=${id}`
     }
 
     const params = {
@@ -33,9 +59,14 @@ function consultar() {
     let HTML_tabla = `
         <tr>
             <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Grupo</th>
+            <th>Título</th>
+            <th>Año de estreno</th>
+            <th>Productor</th>
+            <th>Idioma</th>
+            <th>Genero</th>
+            <th>Actores</th>
+            <th>Directores</th>
+            <th>Guionistas</th>
         </tr>`
 
     fetch(url, params)
@@ -44,18 +75,43 @@ function consultar() {
         })
         .then((data) => {
 
-            data.data.forEach( (alumno => {
+            if(!id){
 
-                HTML_tabla += 
-                `
-                    <tr>
-                        <td>${alumno.id_}</td>
-                        <td>${alumno.first_name}</td>
-                        <td>${alumno.last_name}</td>
-                        <td>${alumno.group_id}</td>
-                    </tr>
-                `
-            }));
+                data.data.forEach( ( movie => {
+    
+                    HTML_tabla += 
+                    `
+                        <tr>
+                            <td>${movie._id}</td>
+                            <td>${movie.title}</td>
+                            <td>${movie.year}</td>
+                            <td>${movie.producer}</td>
+                            <td>${movie.language}</td>
+                            <td>${movie.genre}</td>
+                            <td>${movie.actor_names}</td>
+                            <td>${movie.director_names}</td>
+                            <td>${movie.writer_names}</td>
+                        </tr>
+                    `
+                }));
+
+            }else{
+
+                HTML_tabla +=
+                    `
+                        <tr>
+                            <td>${data.data._id}</td>
+                            <td>${data.data.title}</td>
+                            <td>${data.data.year}</td>
+                            <td>${data.data.producer}</td>
+                            <td>${data.data.language}</td>
+                            <td>${data.data.genre}</td>
+                            <td>${data.data.actor_names}</td>
+                            <td>${data.data.director_names}</td>
+                            <td>${data.data.writer_names}</td>
+                        </tr>
+                    `
+            }
  
             table.innerHTML = HTML_tabla;
         });
@@ -63,13 +119,13 @@ function consultar() {
 }
 
 function modificar() {
-    let id = student_id_input.value;
+    let id = input_id.value;
 
-    let alumno = parseFormData();
+    let movie = parseFormData();
 
     if(id){
 
-        let req_body = JSON.parse( JSON.stringify(alumno) );
+        let req_body = JSON.parse( JSON.stringify(movie) );
         req_body.id = id;
         
         console.log(req_body);
@@ -100,13 +156,15 @@ function modificar() {
 }
 
 function crear(){
-    let student = parseFormData();
+    let movie = parseFormData();
 
     const params = {
         headers: {'content-type':'application/json'},
-        body: JSON.stringify(student),
+        body: JSON.stringify(movie),
         method: 'POST'
     }
+
+    console.log(params.body)
 
     fetch(base_url, params)
     .then( (data) => {
@@ -123,7 +181,7 @@ function crear(){
 }
 
 function borrar(){
-    let ID = student_id_input.value;
+    let ID = input_id.value;
 
     if(ID){
         const params = {
