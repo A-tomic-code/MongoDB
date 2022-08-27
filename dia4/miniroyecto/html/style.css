@@ -3,10 +3,11 @@
     box-sizing: border-box !important;
 }
 .main{
+    position: absolute;
     width: 100vw;
     min-height: 100vh;
     background: rgba(178, 187, 189, 0.627);
-    z-index: -1 !important;
+    z-index: -2 !important;
 
 }
 header{
@@ -22,13 +23,13 @@ label{
     background: rgb(34, 58, 66);
 }
 .bg-image{
-    position: absolute;
+    position: fixed;
     right: 0px;
 
     width: 100vw;
     height: 90vh;
 
-    z-index: 0;
+    z-index: -1;
 
     background: url(bg.png) no-repeat 110% center !important;
     background-size: contain !important;
@@ -96,7 +97,7 @@ label{
     border-bottom: 1px solid green;
     /* border-bottom: 1px solid green; */
     width: 100%;
-    padding: 1%;
+    padding: 3%;
     padding-left: 3%;
     outline: none;
     color: green;

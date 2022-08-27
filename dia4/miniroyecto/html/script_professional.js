@@ -34,11 +34,11 @@ function consultar() {
 
     let HTML_tabla = `
         <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Edad</th>
-            <th>Profesion</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Edad</th>
+        <th>Profesion</th>
+        <th>ID</th>
         </tr>`
 
     fetch(url, params)
@@ -55,11 +55,11 @@ function consultar() {
                     HTML_tabla +=
                         `
                     <tr>
-                        <td>${professional._id}</td>
-                        <td>${professional.first_name}</td>
-                        <td>${professional.last_name}</td>
-                        <td>${professional.age}</td>
-                        <td>${professional.profesion}</td>
+                    <td>${professional.first_name}</td>
+                    <td>${professional.last_name}</td>
+                    <td>${professional.age}</td>
+                    <td>${professional.profesion}</td>
+                    <td>${professional._id}</td>
 
                     </tr>
                 `
@@ -69,11 +69,11 @@ function consultar() {
                 HTML_tabla +=
                     `
                     <tr>
-                        <td>${data.data._id}</td>
-                        <td>${data.data.first_name}</td>
-                        <td>${data.data.last_name}</td>
-                        <td>${data.data.age}</td>
-                        <td>${data.data.profesion}</td>
+                    <td>${data.data.first_name}</td>
+                    <td>${data.data.last_name}</td>
+                    <td>${data.data.age}</td>
+                    <td>${data.data.profesion}</td>
+                    <td>${data.data._id}</td>
                     `
                   
             }

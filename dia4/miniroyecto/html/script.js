@@ -58,15 +58,15 @@ function consultar() {
 
     let HTML_tabla = `
         <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Año de estreno</th>
-            <th>Productor</th>
-            <th>Idioma</th>
-            <th>Genero</th>
-            <th>Actores</th>
-            <th>Directores</th>
-            <th>Guionistas</th>
+        <th>Título</th>
+        <th>Año de estreno</th>
+        <th>Productor</th>
+        <th>Idioma</th>
+        <th>Genero</th>
+        <th>Actores</th>
+        <th>Directores</th>
+        <th>Guionistas</th>
+        <th>ID</th>
         </tr>`
 
     fetch(url, params)
@@ -82,15 +82,15 @@ function consultar() {
                     HTML_tabla += 
                     `
                         <tr>
-                            <td>${movie._id}</td>
-                            <td>${movie.title}</td>
-                            <td>${movie.year}</td>
-                            <td>${movie.producer}</td>
-                            <td>${movie.language}</td>
-                            <td>${movie.genre}</td>
-                            <td>${movie.actor_names}</td>
-                            <td>${movie.director_names}</td>
-                            <td>${movie.writer_names}</td>
+                        <td>${movie.title}</td>
+                        <td>${movie.year}</td>
+                        <td>${movie.producer}</td>
+                        <td>${movie.language}</td>
+                        <td>${movie.genre}</td>
+                        <td>${movie.actor_names.join(', ')}</td>
+                        <td>${movie.director_names.join(', ') }</td>
+                        <td>${movie.writer_names.join(', ') }</td>
+                        <td>${movie._id}</td>
                         </tr>
                     `
                 }));
@@ -100,15 +100,15 @@ function consultar() {
                 HTML_tabla +=
                     `
                         <tr>
-                            <td>${data.data._id}</td>
-                            <td>${data.data.title}</td>
-                            <td>${data.data.year}</td>
-                            <td>${data.data.producer}</td>
-                            <td>${data.data.language}</td>
-                            <td>${data.data.genre}</td>
-                            <td>${data.data.actor_names}</td>
-                            <td>${data.data.director_names}</td>
-                            <td>${data.data.writer_names}</td>
+                        <td>${data.data.title}</td>
+                        <td>${data.data.year}</td>
+                        <td>${data.data.producer}</td>
+                        <td>${data.data.language}</td>
+                        <td>${data.data.genre}</td>
+                        <td>${data.data.actor_names}</td>
+                        <td>${data.data.director_names}</td>
+                        <td>${data.data.writer_names}</td>
+                        <td>${data.data._id}</td>
                         </tr>
                     `
             }
