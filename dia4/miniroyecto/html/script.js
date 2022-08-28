@@ -1,18 +1,29 @@
 const table = document.querySelector('table');
+const form = document.querySelector('form');
+
 const input_id = document.getElementById('id')
+
+const input_title = document.getElementById('title');
+const input_anyo = document.getElementById('anyo');
+const input_producer = document.getElementById('producer');
+const input_language = document.getElementById('language');
+const input_genre = document.getElementById('genre');
+const input_actors = document.getElementById('actors');
+const input_directors = document.getElementById('directors');
+const input_writers = document.getElementById('writers');
 
 const base_url = "http://localhost:5555/movies"
 
 function parseFormData() {
 
-    let title = document.getElementById('title').value;
-    let anyo = document.getElementById('anyo').value;
-    let producer = document.getElementById('producer').value;
-    let language = document.getElementById('language').value;
-    let genre = document.getElementById('genre').value;
-    let actors = document.getElementById('actors').value;
-    let directors = document.getElementById('directors').value;
-    let writers = document.getElementById('writers').value;
+    let title = input_title.value;
+    let anyo = input_anyo.value;
+    let producer = input_producer.value;
+    let language = input_language.value;
+    let genre = input_genre.value;
+    let actors = input_actors.value;
+    let directors = input_directors.value;
+    let writers = input_writers.value;
 
     let arr_actors = []
     let arr_directors = []
@@ -43,6 +54,24 @@ function parseFormData() {
     return movie
 }
 
+function parseRowData(row){
+    let id = row.getAttribute('id');
+    
+    let table_columns = document.getElementById(id).children;
+
+    input_title.value = table_columns[0].innerHTML;
+    input_anyo.value = table_columns[1].innerHTML;
+    input_producer.value = table_columns[2].innerHTML;
+    input_language.value = table_columns[3].innerHTML;
+    input_genre.value = table_columns[4].innerHTML;
+    input_actors.value = table_columns[5].innerHTML;
+    input_directors.value = table_columns[6].innerHTML;
+    input_writers.value = table_columns[7].innerHTML;
+    input_id.value = table_columns[9].innerHTML;
+
+    console.log(id)
+}
+
 function consultar() {
     let url = base_url;
     let id = input_id.value;
@@ -56,18 +85,21 @@ function consultar() {
         method: 'GET'
     }
 
-    let HTML_tabla = `
+    let HTML_tabla = 
+    `
         <tr>
-        <th>Título</th>
-        <th>Año de estreno</th>
-        <th>Productor</th>
-        <th>Idioma</th>
-        <th>Genero</th>
-        <th>Actores</th>
-        <th>Directores</th>
-        <th>Guionistas</th>
-        <th>ID</th>
-        </tr>`
+            <th>Título</th>
+            <th>Año de estreno</th>
+            <th>Productor</th>
+            <th>Idioma</th>
+            <th>Genero</th>
+            <th>Actores</th>
+            <th>Directores</th>
+            <th>Guionistas</th>
+            <th>Editar</th>
+            <th class="table-id">ID</th>
+        </tr>
+    `
 
     fetch(url, params)
         .then((result) => {
@@ -81,16 +113,19 @@ function consultar() {
     
                     HTML_tabla += 
                     `
-                        <tr>
-                        <td>${movie.title}</td>
-                        <td>${movie.year}</td>
-                        <td>${movie.producer}</td>
-                        <td>${movie.language}</td>
-                        <td>${movie.genre}</td>
-                        <td>${movie.actor_names.join(', ')}</td>
-                        <td>${movie.director_names.join(', ') }</td>
-                        <td>${movie.writer_names.join(', ') }</td>
-                        <td>${movie._id}</td>
+                        <tr id="${movie._id}" onclick="parseRowData(this)">
+                            <td>${movie.title}</td>
+                            <td>${movie.year}</td>
+                            <td>${movie.producer}</td>
+                            <td>${movie.language}</td>
+                            <td>${movie.genre}</td>
+                            <td>${movie.actor_names.join(', ')}</td>
+                            <td>${movie.director_names.join(', ') }</td>
+                            <td>${movie.writer_names.join(', ') }</td>
+                            <td>
+                                <button class="btn btn-outline-success" onclick="parseRowData('${movie._id}')">Editar</button>
+                            </td>
+                            <td class="table-id">${movie._id}</td>
                         </tr>
                     `
                 }));
@@ -99,22 +134,27 @@ function consultar() {
 
                 HTML_tabla +=
                     `
-                        <tr>
-                        <td>${data.data.title}</td>
-                        <td>${data.data.year}</td>
-                        <td>${data.data.producer}</td>
-                        <td>${data.data.language}</td>
-                        <td>${data.data.genre}</td>
-                        <td>${data.data.actor_names}</td>
-                        <td>${data.data.director_names}</td>
-                        <td>${data.data.writer_names}</td>
-                        <td>${data.data._id}</td>
+                        <tr id="${data.data._id}" onclick="parseRowData(this)">
+                            <td>${data.data.title}</td>
+                            <td>${data.data.year}</td>
+                            <td>${data.data.producer}</td>
+                            <td>${data.data.language}</td>
+                            <td>${data.data.genre}</td>
+                            <td>${data.data.actor_names}</td>
+                            <td>${data.data.director_names}</td>
+                            <td>${data.data.writer_names}</td>
+                            <td>
+                                <button class="btn btn-outline-success" onclick="parseRowData('${data.data._id}')">Editar</button>
+                            </td>
+                            <td class="table-id">${data.data._id}</td>
                         </tr>
                     `
             }
  
             table.innerHTML = HTML_tabla;
         });
+
+        form.reset()
 
 }
 

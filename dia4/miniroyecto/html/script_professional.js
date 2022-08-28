@@ -1,26 +1,38 @@
 const table = document.querySelector('table');
+
+const input_first_name = document.getElementById('first_name');
+const input_last_name = document.getElementById('last_name');
+const input_age = document.getElementById('age');
+const input_profesion = document.getElementById('profesion');
+
 const input_id = document.getElementById('id')
 
 const base_url = "http://localhost:5555/professionals"
 
 function parseFormData() {
-
-    let first_name = document.getElementById('first_name').value;
-    let last_name = document.getElementById('last_name').value;
-    let age = document.getElementById('age').value;
-    let profesion = document.getElementById('profesion').value;
+    let first_name = input_first_name.value;
+    let last_name = input_last_name.value;
+    let age = input_age.value;
+    let profesion = input_profesion.value;
 
     let professional = new Professional(first_name, last_name, age, profesion);
-
-    console.info('Professional object parsed from form');
-    console.info(professional);
 
     return professional
 }
 
+function parseRowData(id) {
+    let table_columns = document.getElementById(id).children;
+
+    input_first_name.value = table_columns[0].innerText;
+    input_last_name.value = table_columns[1].innerText;
+    input_age.value = table_columns[2].innerText;
+    input_profesion.value = table_columns[3].innerText;
+    input_id.value = table_columns[5].innerText;
+}
+
 function consultar() {
     let url = base_url;
-;
+    ;
     let id = input_id.value
 
     if (id) {
@@ -34,11 +46,12 @@ function consultar() {
 
     let HTML_tabla = `
         <tr>
-        <th>Nombre</th>
-        <th>Apellidos</th>
-        <th>Edad</th>
-        <th>Profesion</th>
-        <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Edad</th>
+            <th>Profesion</th>
+            <th>Editar</th>
+            <th class="table-id">ID</th>
         </tr>`
 
     fetch(url, params)
@@ -47,37 +60,41 @@ function consultar() {
         })
         .then((data) => {
 
-            
-            if(!id){
+
+            if (!id) {
                 data.data.forEach((professional => {
                     console.log(professional)
 
                     HTML_tabla +=
                         `
-                    <tr>
-                    <td>${professional.first_name}</td>
-                    <td>${professional.last_name}</td>
-                    <td>${professional.age}</td>
-                    <td>${professional.profesion}</td>
-                    <td>${professional._id}</td>
-
+                    <tr id="${professional._id}">
+                        <td>${professional.first_name}</td>
+                        <td>${professional.last_name}</td>
+                        <td>${professional.age}</td>
+                        <td>${professional.profesion}</td>
+                        <td>
+                            <button class="btn btn-outline-success" onclick="parseRowData('${professional._id}')">Editar</button>
+                        </td>
+                        <td class="table-id">${professional._id}</td>
                     </tr>
                 `
                 }));
-            }else{
+            } else {
 
                 HTML_tabla +=
                     `
-                    <tr>
+                    <tr id="${data.data._id}">
                     <td>${data.data.first_name}</td>
                     <td>${data.data.last_name}</td>
                     <td>${data.data.age}</td>
                     <td>${data.data.profesion}</td>
-                    <td>${data.data._id}</td>
+                    <td>
+                        <button class="btn btn-outline-success" onclick="parseRowData('${data.data._id}')">Editar</button>
+                    </td>
+                    <td class="table-id">${data.data._id}</td>
                     `
-                  
-            }
 
+            }
             table.innerHTML = HTML_tabla;
         });
 

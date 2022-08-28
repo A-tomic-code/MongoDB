@@ -59,7 +59,6 @@ label{
     z-index: 1;
 }.card:hover {
     box-shadow: 0px 0px 3px green;
-    backdrop-filter: hu;
     
 }
 .card-body{
@@ -134,7 +133,15 @@ a:hover{
     overflow: hidden;
     position: relative;
 
+
     z-index: 1 !important;
+}
+.table-id{
+    display: none;
+}
+
+table button{
+    word-break: keep-all;
 }
 
 th{
@@ -148,4 +155,5 @@ th, td{
 
 td{
     background-color: #ffffff57 !important;
+    word-break: break-all;
 }
