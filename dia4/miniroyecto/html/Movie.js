@@ -1,7 +1,7 @@
 class Movie{
-    constructor(title, anyo, producer, language, genre, actors, directors, writers){
+    constructor(title, year, producer, language, genre, actors, directors, writers){
         this.title = title;
-        this.anyo = anyo;
+        this.year = year;
         this.producer = producer;
         this.language = language;
         this.genre = genre;
